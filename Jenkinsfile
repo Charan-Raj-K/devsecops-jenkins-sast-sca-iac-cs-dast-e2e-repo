@@ -14,6 +14,7 @@ pipeline {
     }
     stage('Build') {
       steps {
+	sh 'sudo chmod 666 /var/run/docker.sock'
         withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
           script {
             app = docker.build("charanrajkumar9/testeb")
