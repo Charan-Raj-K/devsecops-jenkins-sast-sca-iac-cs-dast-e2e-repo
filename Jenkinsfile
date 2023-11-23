@@ -4,6 +4,7 @@ pipeline {
     maven 'Maven_3_8_7'
   }
 
+/* SAST - static Code Analysys */	
   stages {
     stage('CompileandRunSonarAnalysis') {
       steps {
@@ -21,6 +22,8 @@ pipeline {
         }
       }
     }
+
+/* Container Scan using SNYK */
     stage('RunContainerScan') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
@@ -37,6 +40,8 @@ pipeline {
         }
       }
     }
+
+/* SCA Scan using SNYK */
     stage('RunSnykSCA') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
@@ -44,16 +49,17 @@ pipeline {
         }
       }
     }
+
+/* DAST - Dynamic Application Security Testing Code Analysys */
     /*stage('RunDASTUsingZAP') {
       steps {
       //  bat("C:\\zap\\ZAP_2.12.0_Crossplatform\\ZAP_2.12.0\\zap.sh -port 9393 -cmd -quickurl https://www.example.com -quickprogress -quickout //C:\\zap\\ZAP_2.12.0_Crossplatform\\ZAP_2.12.0\\Output.html")
 	 sh 'cd /opt/owaspzap/zap/' 
          sh './zap.sh -port 9393 -cmd -quickurl https://www.example.com -quickprogress -quickout /opt/owaspzap/zap/Output.html'
-	  
-	  
       }
     }*/
-
+	  
+/* IAC security scan using checkov */
     stage('checkov') {
       steps {
         sh 'checkov -s -f main.tf'
