@@ -62,7 +62,7 @@ pipeline {
 /* IAC security scan using checkov */
     stage('checkov') {
       steps {
-        sh 'checkov -s -f main.tf'
+        sh 'checkov -s -f main.tf'  // -s is used to prevent build from failing and -f is used to pass any file
       }
     }
 
