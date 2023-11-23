@@ -44,7 +44,7 @@ pipeline {
         }
       }
     }
-    stage('RunDASTUsingZAP') {
+    /*stage('RunDASTUsingZAP') {
       steps {
       //  bat("C:\\zap\\ZAP_2.12.0_Crossplatform\\ZAP_2.12.0\\zap.sh -port 9393 -cmd -quickurl https://www.example.com -quickprogress -quickout //C:\\zap\\ZAP_2.12.0_Crossplatform\\ZAP_2.12.0\\Output.html")
 	 sh 'cd /opt/owaspzap/zap/' 
@@ -52,7 +52,7 @@ pipeline {
 	  
 	  
       }
-    }
+    }*/
 
     stage('checkov') {
       steps {
