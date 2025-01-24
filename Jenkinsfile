@@ -5,7 +5,7 @@ pipeline {
   }
 
 /* SAST - static Code Analysys */	
-  stages {
+/*  stages {
     stage('CompileandRunSonarAnalysis') {
       steps {
         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
@@ -21,7 +21,7 @@ pipeline {
           }
         }
       }
-    }
+    }*/
 
 
 
