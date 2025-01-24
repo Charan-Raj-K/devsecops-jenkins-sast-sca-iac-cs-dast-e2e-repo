@@ -9,7 +9,7 @@ pipeline {
     stage('CompileandRunSonarAnalysis') {
       steps {
         withCredentials([string(credentialsId: 'SONAR_TOKEN', variable: 'SONAR_TOKEN')]) {
-          sh 'mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=easybuggy -Dsonar.host.url=http://192.168.56.31:9000/'
+          sh 'mvn -Dmaven.test.failure.ignore verify sonar:sonar -Dsonar.login=$SONAR_TOKEN -Dsonar.projectKey=easybuggy -Dsonar.host.url=http://localhost:9000/'
         }
       }
     }
@@ -23,7 +23,8 @@ pipeline {
       }
     }
 
-/* Container Scan using SNYK */
+
+/* /* Container Scan using SNYK */
     stage('RunContainerScan') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
@@ -39,7 +40,24 @@ pipeline {
           }
         }
       }
-    }
+    }*/
+
+/* SCA scan using snyk as docker container to scan docker image */
+	  stage ('RunContainerScan'){
+	    steps{
+		 script{
+		   snykSecurity severity: 'critical', snykInstallation: 'snyk', snykTokenId: 'snyk-cred'
+		   def variable = sh(
+			   script:'snyk container test charanrajkumar9/testeb',
+			   returnStatus: true)
+
+		  echo "error code = ${variable}"
+		  if (variable !=0){
+			  echo "Alert for vulnerablility found"
+		        }	 	 
+		      }   
+	       } 	  
+	  }
 
 /* SCA Scan using SNYK */
     stage('RunSnykSCA') {
