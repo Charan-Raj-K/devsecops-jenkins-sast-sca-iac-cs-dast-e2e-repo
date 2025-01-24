@@ -24,7 +24,8 @@ pipeline {
     }
 
 
-/* /* Container Scan using SNYK */
+/*
+/* Container Scan using SNYK */
     stage('RunContainerScan') {
       steps {
         withCredentials([string(credentialsId: 'SNYK_TOKEN', variable: 'SNYK_TOKEN')]) {
